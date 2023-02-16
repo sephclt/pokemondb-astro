@@ -1,0 +1,10 @@
+---
+import { PokemonListType } from '@/types/Data';
+
+const { pokemonName } = Astro.params;
+
+const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+const pokemonData = await res.json();
+---
+
+<div>{pokemonData.name}</div>

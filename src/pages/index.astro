@@ -1,17 +1,24 @@
 ---
 import PokemonLayout from '@/layouts/pokemonLayout.astro';
 import Card from '@/components/Card.astro';
+import type { PokemonListType } from '@/types/Data';
+
+const getData = async () => {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon');
+  const pokemonData: PokemonListType = await res.json();
+
+  return pokemonData;
+};
+
+const pokemonData = await getData();
 ---
 
 <title>Pokemon DB</title>
 
 <PokemonLayout>
-  <Card
-    image='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
-    pokemonName='Bulbulsaur'
-  />
-  <Card
-    image='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
-    pokemonName='Bulbulsaur'
-  />
+  {
+    pokemonData
+      ? pokemonData.results.map((pokemon) => <h1>{pokemon.name}</h1>)
+      : null
+  }
 </PokemonLayout>
