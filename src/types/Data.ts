@@ -10,6 +10,12 @@ export type PokemonListType = {
 export type PokemonDataType = {
   name: string;
   order: number;
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
   sprites: {
     other: {
       'official-artwork': {

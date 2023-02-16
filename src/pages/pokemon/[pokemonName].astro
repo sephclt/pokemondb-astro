@@ -1,7 +1,7 @@
 ---
 import type { PokemonDataType } from '@/types/Data';
 
-import PokemonLayout from '@/layouts/pokemonLayout.astro';
+import EachPokemonLayout from '@/layouts/eachPokemonLayout.astro';
 import { Image } from '@astrojs/image/components';
 
 const { pokemonName } = Astro.params;
@@ -25,14 +25,37 @@ const pokemonImage =
 console.log(pokemonImage);
 ---
 
-<PokemonLayout>
-  <div class=''>
-    <Image
-      src={pokemonImage}
-      alt={pokemonData.name}
-      width={100}
-      height={100}
-      format='png'
-    />
+<EachPokemonLayout>
+  <div class='w-full flex flex-col justify-evenly items-center'>
+    <h1 class='font-bold mb-12'>
+      {pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}
+    </h1>
+    <div class='flex flex-row'>
+      <div class='flex flex-col items-center'>
+        <Image
+          src={pokemonImage}
+          alt={pokemonData.name}
+          width={350}
+          height={350}
+          format='png'
+        />
+      </div>
+      <div class='flex flex-col gap-4'>
+        {
+          pokemonData.stats.map((data) => (
+            <div>
+              <p>
+                {data.stat.name}: {data.base_stat}
+              </p>
+              <progress
+                class='progress progress-primary w-56 rounded-none'
+                value={data.base_stat}
+                max='255'
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
   </div>
-</PokemonLayout>
+</EachPokemonLayout>
