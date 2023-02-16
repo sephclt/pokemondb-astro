@@ -1,10 +1,14 @@
 ---
-import { PokemonListType } from '@/types/Data';
+import type { PokemonListType, PokemonDataType } from '@/types/Data';
+
+import Card from '@/components/Card.astro';
+import PokemonLayout from '@/layouts/pokemonLayout.astro';
+import { Image } from '@astrojs/image/components';
 
 const { pokemonName } = Astro.params;
 
 const resData = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-const pokemonData = await resData.json();
+const pokemonData: PokemonDataType = await resData.json();
 
 export const getStaticPaths = async () => {
   const resList = await fetch('https://pokeapi.co/api/v2/pokemon');
@@ -15,6 +19,21 @@ export const getStaticPaths = async () => {
     });
   }
 };
+
+const pokemonImage =
+  pokemonData.sprites.other['official-artwork']['front_default'];
+
+console.log(pokemonImage);
 ---
 
-<div>{pokemonData.name}</div>
+<PokemonLayout>
+  <div class=''>
+    <Image
+      src={pokemonImage}
+      alt={pokemonData.name}
+      width={100}
+      height={100}
+      format='png'
+    />
+  </div>
+</PokemonLayout>
