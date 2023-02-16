@@ -8,6 +8,7 @@ export type PokemonListType = {
 };
 
 export type PokemonDataType = {
+  id: number;
   name: string;
   order: number;
   stats: {

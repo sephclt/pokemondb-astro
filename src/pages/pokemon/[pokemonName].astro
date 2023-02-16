@@ -3,6 +3,7 @@ import type { PokemonDataType } from '@/types/Data';
 
 import EachPokemonLayout from '@/layouts/eachPokemonLayout.astro';
 import { Image } from '@astrojs/image/components';
+import { defaultLogLevel } from 'astro/dist/core/logger/core';
 
 const { pokemonName } = Astro.params;
 
@@ -10,7 +11,7 @@ const resData = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
 const pokemonData: PokemonDataType = await resData.json();
 
 export const getStaticPaths = async () => {
-  const resList = await fetch('https://pokeapi.co/api/v2/pokemon');
+  const resList = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1279');
   const pokemonList = await resList.json();
   if (pokemonList) {
     return pokemonList.results.map((pokemon) => {
@@ -19,13 +20,32 @@ export const getStaticPaths = async () => {
   }
 };
 
+const handleBackButton = () => {
+  const id = pokemonData.id;
+  switch (true) {
+    case id < 50:
+      return '/pokemon/1';
+    case id < 100 && id > 50:
+      return '/pokemon/2';
+    case id < 150 && id > 100:
+      return '/pokemon/3';
+    case id < 200 && id > 150:
+      return '/pokemon/4';
+    default:
+      return 'nothing';
+  }
+};
+
+const backButton = handleBackButton();
+
 const pokemonImage =
   pokemonData.sprites.other['official-artwork']['front_default'];
-
-console.log(pokemonImage);
 ---
 
 <EachPokemonLayout>
+  <div>
+    <a href={backButton} class='btn btn-ghost'>Back</a>
+  </div>
   <div class='w-full flex flex-col justify-evenly items-center'>
     <h1 class='font-bold mb-12'>
       {pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}
