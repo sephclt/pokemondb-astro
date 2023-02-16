@@ -1,6 +1,17 @@
 ---
+import PokemonLayout from '@/layouts/pokemonLayout.astro';
+import Card from '@/components/Card.astro';
 ---
 
 <title>Pokemon DB</title>
 
-<div class='bg-primary font-sans'>HELLO WORLD</div>
+<PokemonLayout>
+  <Card
+    image='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
+    pokemonName='Bulbulsaur'
+  />
+  <Card
+    image='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
+    pokemonName='Bulbulsaur'
+  />
+</PokemonLayout>

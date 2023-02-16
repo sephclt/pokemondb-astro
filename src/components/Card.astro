@@ -1,0 +1,26 @@
+---
+import { Image } from '@astrojs/image/components';
+import Link from './Link.astro';
+
+type Props = {
+  image: string;
+  pokemonName: string;
+};
+
+const { image, pokemonName } = Astro.props;
+---
+
+<Link route={pokemonName}>
+  <div class='card bg-base-300'>
+    <figure>
+      <Image
+        src={image}
+        alt={pokemonName}
+        width={150}
+        height={150}
+        format='png'
+      />
+    </figure>
+    <div class='card-body'><h1 class='card-title'>{pokemonName}</h1></div>
+  </div>
+</Link>
