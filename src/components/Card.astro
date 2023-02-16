@@ -10,8 +10,8 @@ type Props = {
 const { image, pokemonName } = Astro.props;
 ---
 
-<Link route={pokemonName}>
-  <div class='card bg-base-300'>
+<Link route={pokemonName.toLowerCase()}>
+  <div class='card w-52 bg-base-300'>
     <figure>
       <Image
         src={image}

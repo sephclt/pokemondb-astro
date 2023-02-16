@@ -12,7 +12,16 @@ const pokemonList: PokemonListType = await res.json();
 <PokemonLayout>
   {
     pokemonList
-      ? pokemonList.results.map((pokemon) => <h1>{pokemon.name}</h1>)
+      ? pokemonList.results.map((pokemon, index) => (
+          <Card
+            image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+              index + 1
+            }.png`}
+            pokemonName={
+              pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+            }
+          />
+        ))
       : null
   }
 </PokemonLayout>

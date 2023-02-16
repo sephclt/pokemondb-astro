@@ -4,7 +4,7 @@ export type PokemonResultType = {
 };
 
 export type PokemonListType = {
-  results: PokemonDataType[];
+  results: PokemonResultType[];
 };
 
 export type PokemonDataType = {
