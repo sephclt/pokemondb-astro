@@ -3,8 +3,22 @@ import { PokemonListType } from '@/types/Data';
 
 const { pokemonName } = Astro.params;
 
-const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-const pokemonData = await res.json();
+const resData = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+const pokemonData = await resData.json();
+
+const resList = await fetch('https://pokeapi.co/api/v2/pokemon');
+const pokemonList = await resList.json();
+const paramsList = pokemonList;
+
+export const getStaticPaths = async () => {
+  return [
+    paramsList.results.map((pokemon) => {
+      params: {
+        pokemonName: pokemon.name;
+      }
+    }),
+  ];
+};
 ---
 
 <div>{pokemonData.name}</div>

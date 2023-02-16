@@ -3,22 +3,16 @@ import PokemonLayout from '@/layouts/pokemonLayout.astro';
 import Card from '@/components/Card.astro';
 import type { PokemonListType } from '@/types/Data';
 
-const getData = async () => {
-  const res = await fetch('https://pokeapi.co/api/v2/pokemon');
-  const pokemonData: PokemonListType = await res.json();
-
-  return pokemonData;
-};
-
-const pokemonData = await getData();
+const res = await fetch('https://pokeapi.co/api/v2/pokemon');
+const pokemonList: PokemonListType = await res.json();
 ---
 
 <title>Pokemon DB</title>
 
 <PokemonLayout>
   {
-    pokemonData
-      ? pokemonData.results.map((pokemon) => <h1>{pokemon.name}</h1>)
+    pokemonList
+      ? pokemonList.results.map((pokemon) => <h1>{pokemon.name}</h1>)
       : null
   }
 </PokemonLayout>
