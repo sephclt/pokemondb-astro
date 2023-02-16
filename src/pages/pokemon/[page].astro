@@ -1,0 +1,40 @@
+---
+import PokemonLayout from '@/layouts/pokemonLayout.astro';
+import Card from '@/components/Card.astro';
+
+export const getStaticPaths = async ({ paginate }) => {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1279');
+  const result = await res.json();
+  const data = result.results;
+
+  return paginate(data, { pageSize: 50 });
+};
+
+const { page } = Astro.props;
+const currentDataSize = page.size * (page.currentPage - 1);
+---
+
+<PokemonLayout>
+  <div slot='pageControl' class='flex gap-8'>
+    <a href={page.url.prev} class='btn btn-primary rounded-full'>Prev</a>
+    <div class='flex items-center gap-8'>
+      <h1>Page {page.currentPage} of {page.lastPage}</h1>
+    </div>
+    <a href={page.url.next} class='btn btn-primary rounded-full'>Next</a>
+  </div>
+  {
+    page.data
+      ? page.data.map((pokemon, index) => {
+          const pokemonID = currentDataSize + index + 1;
+          return (
+            <Card
+              image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonID}.png`}
+              pokemonName={
+                pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+              }
+            />
+          );
+        })
+      : null
+  }
+</PokemonLayout>
