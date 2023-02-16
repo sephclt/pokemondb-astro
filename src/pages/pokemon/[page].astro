@@ -7,25 +7,38 @@ export const getStaticPaths = async ({ paginate }) => {
   const result = await res.json();
   const data = result.results;
 
-  return paginate(data, { pageSize: 50 });
+  return paginate(data, { pageSize: 49 });
 };
 
 const { page } = Astro.props;
-const currentDataSize = page.size * (page.currentPage - 1);
 ---
 
 <PokemonLayout>
   <div slot='pageControl' class='flex gap-8'>
-    <a href={page.url.prev} class='btn btn-primary rounded-full'>Prev</a>
+    <a
+      href='/pokemon/1'
+      class={`btn ${page.currentPage !== 1 ? 'btn-secondary' : 'btn-disabled'}`}
+      >First</a
+    >
+    <a href={page.url.prev} class='btn btn-primary'>Prev</a>
     <div class='flex items-center gap-8'>
       <h1>Page {page.currentPage} of {page.lastPage}</h1>
     </div>
-    <a href={page.url.next} class='btn btn-primary rounded-full'>Next</a>
+    <a href={page.url.next} class='btn btn-primary'>Next</a>
+    <a
+      href={`/pokemon/${page.lastPage}`}
+      class={`btn ${
+        page.currentPage !== page.lastPage ? 'btn-secondary' : 'btn-disabled'
+      }`}>Last</a
+    >
   </div>
   {
     page.data
       ? page.data.map((pokemon, index) => {
-          const pokemonID = currentDataSize + index + 1;
+          let pokemonID = page.start + index + 1;
+          if (pokemonID >= 1009) {
+            pokemonID = pokemonID + 8992;
+          }
           return (
             <Card
               image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonID}.png`}
