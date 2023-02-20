@@ -31,13 +31,21 @@ const pokemonImage =
     </h1>
     <div class='flex flex-row'>
       <div class='flex flex-col items-center'>
-        <Image
-          src={pokemonImage}
-          alt={pokemonData.name}
-          width={350}
-          height={350}
-          format='png'
-        />
+        {
+          pokemonImage ? (
+            <Image
+              src={pokemonImage}
+              alt={pokemonData.name}
+              width={350}
+              height={350}
+              format='png'
+            />
+          ) : (
+            <div class='w-[350px] h-[350px] flex justify-center items-center'>
+              pokemonData.name
+            </div>
+          )
+        }
       </div>
       <div class='flex flex-col gap-4'>
         {
