@@ -50,4 +50,22 @@ const { page } = Astro.props;
         })
       : null
   }
+  <div slot='pageControlFooter' class='flex gap-8'>
+    <a
+      href='/pokemon/1'
+      class={`btn ${page.currentPage !== 1 ? 'btn-secondary' : 'btn-disabled'}`}
+      >First</a
+    >
+    <a href={page.url.prev} class='btn btn-primary'>Prev</a>
+    <div class='flex items-center gap-8'>
+      <h1>Page {page.currentPage} of {page.lastPage}</h1>
+    </div>
+    <a href={page.url.next} class='btn btn-primary'>Next</a>
+    <a
+      href={`/pokemon/${page.lastPage}`}
+      class={`btn ${
+        page.currentPage !== page.lastPage ? 'btn-secondary' : 'btn-disabled'
+      }`}>Last</a
+    >
+  </div>
 </PokemonLayout>
